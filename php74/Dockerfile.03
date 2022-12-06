@@ -1,10 +1,9 @@
 # 
-# framenetbrasil/apache-php:v3.5.3
+# framenetbrasil/apache-php:v3.5.2
 #
 # 2020/09/24: php:7.4.10-apache
 # 2020/09/24: add Ds extension
 # 2021/08/01: add grpc extension via pecl
-# 2021/09/28: add jpg to gd exetnsion
 #
 
 # Base image
@@ -70,8 +69,9 @@ RUN pecl install apcu
 
 RUN pecl install grpc
 
-RUN apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng-dev zlib1g-dev libjpeg-dev
-RUN docker-php-ext-configure gd --with-jpeg
+RUN apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng-dev
+#RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/
+RUN docker-php-ext-configure gd
 RUN docker-php-ext-install -j$(nproc) gd
 
 RUN echo "xdebug.remote_enable=1" >> "$PHP_INI_DIR/php.ini" \
